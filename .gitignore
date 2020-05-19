@@ -1,0 +1,9 @@
+Depot/obj/*
+Depot/bin/Debug/*
+Depot/bin/Release/Depot.exe.config
+Depot/bin/Release/Depot.mdb
+Depot/bin/Release/Depot.pdb
+Depot/bin/Release/Depot.vshost.exe
+Depot/bin/Release/Depot.vshost.exe.config
+Depot/bin/Release/Depot.vshost.exe.manifest
+
