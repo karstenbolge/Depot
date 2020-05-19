@@ -57,8 +57,9 @@ namespace Converter
                         }
                         else
                         {
-                            impRecord.setDepotNumber("  00000000000000000".Substring(0, 16 - fields[1].Length) + fields[1]);
-                            impRecord.setIdCode(fields[2]);
+                            //impRecord.setDepotNumber("  00000000000000000".Substring(0, 16 - fields[1].Length) + fields[1]);
+                            impRecord.setDepotNumber(fields[1]);
+                            impRecord.setIdCode(fields[12]);
                             impRecord.setAmount(fields[6]);
                             impRecord.setSettlementDate(fields[3]);
 
