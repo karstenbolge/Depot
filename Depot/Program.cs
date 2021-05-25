@@ -21,6 +21,7 @@ namespace Converter
                 Console.Write("  Uses Ssl\n");
                 Console.Write("  To email\n");
                 Console.Write("  Fondkode file\n");
+                Console.Write("  Nordea depot file\n");
                 Console.Write("  [Debug level]\n");
                 Environment.Exit(5);
             }
@@ -28,7 +29,7 @@ namespace Converter
             Logger logger = new Logger(args[1] + "\\" + date);
             bool debugLevel = false;
 
-            if (args.Length < 9)
+            if (args.Length < 10)
             {
                 logger.Write("Too few parameters!", true);
                 logger.Write("  Input folder", true);
@@ -40,6 +41,7 @@ namespace Converter
                 logger.Write("  Uses Ssl", true);
                 logger.Write("  To email", true);
                 logger.Write("  Fondkode file", true);
+                logger.Write("  Nordea depot file", true);
                 logger.Write("  [Debug level]", true);
                 Environment.Exit(1);
             }
@@ -62,10 +64,12 @@ namespace Converter
 
             FondCode fondCode = new FondCode(logger);
 
+            NordeaDepot nordeaDepot = new NordeaDepot(logger);
+
             logger.Write("---- Start " + Assembly.GetCallingAssembly().GetName().Version +  " --------------", true);
-            if (args.Length >= 10)
+            if (args.Length >= 11)
             {
-                debugLevel = args[9].ToLower() == "true";
+                debugLevel = args[10].ToLower() == "true";
                 if (debugLevel)
                 {
                     logger.Write("Debug level : true", true);
@@ -75,6 +79,12 @@ namespace Converter
             if (!fondCode.readFile(args[8], ref debugLevel))
             {
                 email.Send("Superport cannot find fond code file.", "The parameter given for the fond code file is " + args[8] + " but cannot be found!");
+                Environment.Exit(3);
+            }
+
+            if (!nordeaDepot.readFile(args[9], ref debugLevel))
+            {
+                email.Send("Superport cannot find Nordea Depot file.", "The parameter given for the depot code file is " + args[9] + " but cannot be found!");
                 Environment.Exit(3);
             }
 
@@ -123,6 +133,12 @@ namespace Converter
                         {
                             DanskeBank danskeBank = new DanskeBank(lines, logger);
                             numberOfSupoerPortRecords += danskeBank.Process(ref emailBody, ref debugLevel, ref success, args[1] + "\\" + date);
+                        }
+                        else if ((lines[0][10] == 31))
+                        {
+                            Nordea nordea = new Nordea(lines, ref nordeaDepot, logger);
+                            numberOfSupoerPortRecords += nordea.Process(ref emailBody, ref debugLevel, ref success, args[1] + "\\" + date);
+
                         }
                         else
                         {
