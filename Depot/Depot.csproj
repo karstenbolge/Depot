@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Nordea.cs" />
     <Compile Include="DanskeBank.cs" />
     <Compile Include="DecimalNumber.cs" />
     <Compile Include="DateOnly.cs" />
@@ -52,6 +53,7 @@
     <Compile Include="ImpRecord.cs" />
     <Compile Include="BankData.cs" />
     <Compile Include="Logger.cs" />
+    <Compile Include="NordeaDepot.cs" />
     <Compile Include="Nykredit.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
