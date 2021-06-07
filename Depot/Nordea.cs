@@ -80,17 +80,21 @@ namespace Converter
                     }
                     else
                     {
-                        string account = fields[0];
-                        if (account.Length > 10)
+                        string depot = fields[0];
+                        if (depot.Length > 10)
                         {
-                            account = account.Substring(account.Length - 10);
+                            depot = depot.Substring(depot.Length - 10);
                         }
-                        
-                        string depot = nordeaDepot.getDepot(account);
+                        depot = depot.TrimStart('0');
+                        if (depot.Length < 10)
+                        {
+                            //Getting danish depot for foreing
+                            depot = nordeaDepot.getDepot(depot);
+                        }
                         if (depot.Equals(string.Empty))
                         {
                             success = false;
-                            emailBody += "Try to get Nordea Depot code for account " + account + " but was not found in the Nordea depot file.\n";
+                            emailBody += "Try to get Nordea Depot code for account " + depot + " but was not found in the Nordea depot file.\n";
                         }
                         impRecord.setDepotNumber("0000000000" + depot, false, 10);
 
