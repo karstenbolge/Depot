@@ -136,7 +136,7 @@ namespace Converter
                         }
                         else if ((lines[0][10] == 31))
                         {
-                            Nordea nordea = new Nordea(lines, ref nordeaDepot, logger);
+                            Nordea nordea = new Nordea(lines, ref nordeaDepot, files[j], logger);
                             numberOfSupoerPortRecords += nordea.Process(ref emailBody, ref debugLevel, ref success, args[1] + "\\" + date);
 
                         }
