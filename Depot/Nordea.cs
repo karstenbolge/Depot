@@ -80,7 +80,7 @@ namespace Converter
                     }
                     else
                     {
-                        string depot = fields[0];
+                        string depot = fields[2];
                         if (depot.Length > 10)
                         {
                             depot = depot.Substring(depot.Length - 10);
