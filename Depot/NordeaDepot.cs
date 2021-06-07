@@ -48,7 +48,7 @@ namespace Converter
             konto = konto.TrimStart('0');
             if (!dict.TryGetValue(konto, out value))
             {
-                logger.Write("Try to get Depot number code for account " + konto + " but it was not found in the file " + filePath);
+                logger.Write("Try to get Depot number code for foreing depot " + konto + " but it was not found in the file " + filePath);
                 return string.Empty;
             }
 
