@@ -10,12 +10,26 @@ namespace Converter
         String[] lines;
         NordeaDepot nordeaDepot;
         int numberOfSupoerPortRecords;
+        string date;
 
-        public Nordea(String[] lines, ref NordeaDepot nordeaDepot, Logger l)
+        public Nordea(String[] lines, ref NordeaDepot nordeaDepot, string fileName, Logger l)
         {
             this.lines = lines;
             this.nordeaDepot = nordeaDepot;
             logger = l;
+
+            int i = fileName.IndexOf(".txt");
+            if (i > 10)
+            {
+                string d = fileName.Substring(i - 10, 10);
+                date = d.Substring(6, 4) + d.Substring(3, 2) + d.Substring(0, 2);
+            }
+            else
+            {
+                String d = DateTime.Now.ToShortDateString();
+                date = d.Substring(6, 4) + d.Substring(3, 2) + d.Substring(0, 2);
+            }
+            logger.Write("    Nordea SettelmentDate " + date);
         }
 
         public String splitTransactioNumber(String t)
@@ -24,6 +38,7 @@ namespace Converter
             String[] datePart = lastPart.Split('-');
             String dotPart = lastPart.Split('.')[lastPart.Split('.').Length - 1];
 
+            
             if (datePart.Length < 2)
             {
                 return t;
@@ -81,6 +96,7 @@ namespace Converter
 
                         impRecord.setIdCode(fields[3]);
                         impRecord.setAmount(fields[4]);
+                        impRecord.setSettlementDate(date);
 
                         numberOfSupoerPortRecords++;
                         impRecord.writeDepot(fileName);
